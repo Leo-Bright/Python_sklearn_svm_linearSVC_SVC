@@ -1,4 +1,4 @@
-from sklearn import cross_validation, svm, metrics
+from sklearn import model_selection as cross_validation, svm, metrics
 import matplotlib.pyplot as plt
 import pandas as pd
 
