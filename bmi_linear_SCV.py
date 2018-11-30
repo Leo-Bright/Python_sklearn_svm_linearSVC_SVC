@@ -4,8 +4,9 @@ import pandas as pd
 
 data_matrix = pd.read_csv("labeled_data/node2vec_v1.0_labeled_filter.embeddings", header=None, sep=' ', index_col=0)
 # print(tbl.dtypes)
-label = data_matrix[65]
-del data_matrix[65]
+rows_size, cols_size = data_matrix.shape
+label = data_matrix[cols_size]
+del data_matrix[cols_size]
 
 # wh = pd.concat(dimensions_64, axis=1)
 
