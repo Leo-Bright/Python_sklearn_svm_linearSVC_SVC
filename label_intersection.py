@@ -2,9 +2,9 @@ import json
 import random
 
 
-f_labeled = open(r'labeled_data/node2vec_v1.0_labeled_filter.embeddings', 'w+')
-f_embeddings = open(r'data/deepwalk_highway_64d.embeddings.txt', 'r')
-f_nodes_selected = open(r'data/nodes_intersection.json', 'r')
+f_labeled = open(r'porto/labeled_emb/deepwalk/highway_64d_intersection2.embeddings', 'w+')
+f_embeddings = open(r'porto/embedding/deepwalk/deepwalk_highway_64d.embeddings.txt', 'r')
+f_intersection_nodes = open(r'porto/node/nodes_intersection.json', 'r')
 
 
 def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4)):
@@ -47,8 +47,8 @@ def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4))
     print(intersect)
 
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=1, index=(2, 3))
+label_embeddings(f_intersection_nodes, f_embeddings, f_labeled, fraction=1, index=(2, ))
 
 f_labeled.close()
 f_embeddings.close()
-f_nodes_selected.close()
+f_intersection_nodes.close()

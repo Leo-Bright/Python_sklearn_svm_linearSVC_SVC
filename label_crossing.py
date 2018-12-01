@@ -2,9 +2,9 @@ import json
 import random
 
 
-f_labeled = open(r'labeled_data/node2vec_v1.0_labeled_1000.embeddings', 'w+')
-f_embeddings = open(r'data/node2vec_highway_64d_v1.0.embeddings', 'r')
-f_nodes_selected = open(r'data/nodes_crossing.json', 'r')
+f_labeled = open(r'porto/labeled_emb/deepwalk/highway_64d_crossing.embeddings', 'w+')
+f_embeddings = open(r'porto/embedding/deepwalk/deepwalk_highway_64d.embeddings.txt', 'r')
+f_nodes_selected = open(r'porto/node/nodes_crossing.json', 'r')
 
 
 def label_embeddings(selected, embeddings, output, positive_sample=10000, other_sample=10000, fraction=1):
