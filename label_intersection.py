@@ -2,9 +2,9 @@ import json
 import random
 
 
-f_labeled = open(r'porto/labeled_emb/deepwalk/highway_64d_intersection2.embeddings', 'w+')
-f_embeddings = open(r'porto/embedding/deepwalk/deepwalk_highway_64d.embeddings.txt', 'r')
-f_intersection_nodes = open(r'porto/node/nodes_intersection.json', 'r')
+f_labeled = open(r'sanfrancisco/labeled_emb/deepwalk/sf_labeled.embedding64', 'w+')
+f_embeddings = open(r'sanfrancisco/embedding/deepwalk/sf.embedding64', 'r')
+f_intersection_nodes = open(r'sanfrancisco/node/nodes_intersection.json', 'r')
 
 
 def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4)):
@@ -13,6 +13,7 @@ def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4))
     intersect_2 = 0
     intersect_3 = 0
     intersect_4 = 0
+    normal = 0
     for line in embeddings.readlines():
         line = line.strip()
         osmid_vector = line.split(' ')
@@ -43,11 +44,15 @@ def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4))
         rd = random.randint(0, 99) + 1
         if rd > fraction:
             continue
+        normal += 1
         output.write(line + ' ' + 'normal' + '\n')
-    print(intersect)
+    print("intersection 2 :" + str(intersect_2))
+    print("intersection 3 :" + str(intersect_3))
+    print("intersection 4 :" + str(intersect_4))
+    print("intersection 4 :" + str(normal))
 
 
-label_embeddings(f_intersection_nodes, f_embeddings, f_labeled, fraction=1, index=(2, ))
+label_embeddings(f_intersection_nodes, f_embeddings, f_labeled, fraction=50, index=(2, ))
 
 f_labeled.close()
 f_embeddings.close()
