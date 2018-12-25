@@ -41,7 +41,7 @@ def label_embeddings(selected, embeddings, output, fraction=10, index=(2, 3, 4))
                 intersect_4 += 1
                 intersect += 1
                 continue
-        rd = random.randint(0, 99) + 1
+        rd = random.randint(0, 999) + 1
         if rd > fraction:
             continue
         normal += 1
