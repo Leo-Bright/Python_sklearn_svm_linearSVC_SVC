@@ -2,9 +2,9 @@ import json
 import random
 
 
-f_labeled = open(r'porto/labeled_emb/deepwalk/highway_64d_crossing.embeddings', 'w+')
-f_embeddings = open(r'porto/embedding/deepwalk/deepwalk_highway_64d.embeddings.txt', 'r')
-f_nodes_selected = open(r'porto/node/nodes_crossing.json', 'r')
+f_labeled = open(r'sanfrancisco/labeled_emb/my_model/node2vec_labeled.embeddings', 'w+')
+f_embeddings = open(r'sanfrancisco/embedding/my_model/node2vec.txt', 'r')
+f_nodes_selected = open(r'sanfrancisco/node/nodes_crossing.json', 'r')
 
 
 def label_embeddings(selected, embeddings, output, fraction=1):
@@ -30,7 +30,7 @@ def label_embeddings(selected, embeddings, output, fraction=1):
     print("cormal count: ", normal_count)
 
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=1)
+label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=26)
 
 f_labeled.close()
 f_embeddings.close()

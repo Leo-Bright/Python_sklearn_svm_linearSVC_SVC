@@ -2,7 +2,7 @@ from sklearn import model_selection as cross_validation, svm, metrics
 import matplotlib.pyplot as plt
 import pandas as pd
 
-data_matrix = pd.read_csv("porto/labeled_emb/deepwalk/highway_64d_crossing.embeddings", header=None, sep=' ', index_col=0)
+data_matrix = pd.read_csv("sanfrancisco/labeled_emb/my_model/node2vec_labeled.embeddings", header=None, sep=' ', index_col=0)
 # print(tbl.dtypes)
 rows_size, cols_size = data_matrix.shape
 label = data_matrix[cols_size]
@@ -12,16 +12,16 @@ del data_matrix[cols_size]
 
 data_train, data_test, label_train, label_test = cross_validation.train_test_split(data_matrix, label)
 
-clf = svm.LinearSVC()
+clf = svm.LinearSVC(max_iter=10000)
 
 clf.fit(data_train, label_train)
 predict = clf.predict(data_test)
 ac_score = metrics.accuracy_score(label_test, predict)
-cl_report = metrics.classification_report(label_test, predict)
+cl_report = metrics.classification_report(label_test, predict, digits=4)
 print(ac_score)
 print(cl_report)
 
-f_result = open(r'porto/result/deepwalk/highway_64d_crossing.result', 'w+')
+f_result = open(r'sanfrancisco/result/my_model/node2vec_with_type_crossing.result', 'w+')
 f_result.write(cl_report)
 
 # ===================================直接调用交叉验证评估模型==========================
