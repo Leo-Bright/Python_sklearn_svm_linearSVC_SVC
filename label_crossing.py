@@ -21,7 +21,7 @@ def label_embeddings(selected, embeddings, output, fraction=1):
             output.write(line + ' ' + 'crossing' + '\n')
             crossing_count += 1
         else:
-            rd = random.randint(0, 99) + 1
+            rd = random.randint(0, 999) + 1
             if rd > fraction:
                 continue
             output.write(line + ' ' + 'normal' + '\n')
