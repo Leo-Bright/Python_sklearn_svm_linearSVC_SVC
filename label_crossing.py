@@ -2,9 +2,9 @@ import json
 import random
 
 
-f_labeled = open(r'sanfrancisco/labeled_emb/my_model/sf_random_wn5_wl100_win5_iter5_neg5_dim256.embeddings', 'w+')
-f_embeddings = open(r'sanfrancisco/embedding/my_model/sf_random_wn5_wl100_win5_iter5_neg5_dim256.embeddings', 'r')
-f_nodes_selected = open(r'sanfrancisco/node/nodes_traffic_signals.json', 'r')
+f_labeled = open(r'tokyo/labeled_emb/my_model/tokyo_shortest_wn160_d128_ns5_ws5_labeled.embeddings', 'w+')
+f_embeddings = open(r'tokyo/embedding/my_model/tokyo_shortest_wn160_d128_ns5_ws5.embeddings', 'r')
+f_nodes_selected = open(r'tokyo/node/nodes_traffic_signals.json', 'r')
 
 
 def label_embeddings(selected, embeddings, output, fraction=1):
@@ -30,7 +30,7 @@ def label_embeddings(selected, embeddings, output, fraction=1):
     print("cormal count: ", normal_count)
 
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=50)
+label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=40)
 
 f_labeled.close()
 f_embeddings.close()
