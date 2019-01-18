@@ -1,4 +1,8 @@
-def main(time_samples, embeddings, output):
+import numpy as np
+from numpy import float64, float16
+
+
+def main(time_samples, embeddings, output, method):
 
     output_file = open(output, 'w+')
 
@@ -25,12 +29,29 @@ def main(time_samples, embeddings, output):
                     continue
                 nodes_embeddings.append(osmid_embeddings[node])
 
-            result = [node_sequence] + nodes_embeddings + [[travel_time]]   # how to compute result
+            result = combine_embeddings(nodes_embeddings, method)
             output_file.write('%s\n' % ' '.join(map(str, result)))
 
     output_file.close()
 
 
+def combine_embeddings(embeddings_list, method):
+    matrix = np.array(embeddings_list, dtype=float16)
+    if method == '+':
+        result = matrix.sum(axis=0)
+    elif method == '*':
+        matrix = np.abs(matrix)
+        matrix = np.log(matrix)
+        matrix = np.abs(matrix)
+        result = matrix.sum(axis=0)
+    else:
+        col_size = matrix.shape[1]
+        result = matrix.sum(axis=0)/col_size
+    print(result.tolist())
+    return result.tolist()
+
+
 main(time_samples='sanfrancisco/node/sf_travel_time_21.samples',
      embeddings='sanfrancisco/embedding/my_model/sanfrancisco_shortest_wn160_d128_ns5_ws5.embeddings',
-     output='sanfrancisco/labeled_emb/my_model/sanfrancisco_shortest_wn160_d128_ns5_ws5_time_21.embeddings',)
+     output='sanfrancisco/labeled_emb/my_model/sanfrancisco_shortest_wn160_d128_ns5_ws5_time_21.embeddings',
+     method='*')
