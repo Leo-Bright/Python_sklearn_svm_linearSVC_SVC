@@ -1,5 +1,6 @@
 import numpy as np
-from numpy import float64, float16
+from numpy import float16
+import sys
 
 
 def main(time_samples, embeddings, output, method):
@@ -17,8 +18,15 @@ def main(time_samples, embeddings, output, method):
                 continue
             osmid_embeddings[osmid] = node_vec
 
+    print(output.rsplit('/', 1)[1])
     with open(time_samples, 'r') as time_samples_file:
+        line_count = 0
+        total_output_size = 1000000
         for line in time_samples_file:
+            if line_count >= total_output_size:
+                break
+            if line_count % 10000 == 0:
+                print('process rate: ', line_count/total_output_size)
             line = line.strip()
             node_sequence_time = line.split(' ')
             node_sequence = node_sequence_time[:-1]
@@ -30,7 +38,8 @@ def main(time_samples, embeddings, output, method):
                 nodes_embeddings.append(osmid_embeddings[node])
 
             result = combine_embeddings(nodes_embeddings, method)
-            output_file.write('%s\n' % ' '.join(map(str, result)))
+            output_file.write('%s\n' % ' '.join(map(str, result + [travel_time])))
+            line_count += 1
 
     output_file.close()
 
@@ -44,14 +53,15 @@ def combine_embeddings(embeddings_list, method):
         matrix = np.log(matrix)
         matrix = np.abs(matrix)
         result = matrix.sum(axis=0)
+    elif method == '&':
+        result = matrix.reshape(-1)
     else:
-        col_size = matrix.shape[1]
+        col_size = matrix.shape[0]
         result = matrix.sum(axis=0)/col_size
-    print(result.tolist())
     return result.tolist()
 
 
 main(time_samples='sanfrancisco/node/sf_travel_time_21.samples',
-     embeddings='sanfrancisco/embedding/my_model/sanfrancisco_shortest_wn160_d128_ns5_ws5.embeddings',
-     output='sanfrancisco/labeled_emb/my_model/sanfrancisco_shortest_wn160_d128_ns5_ws5_time_21.embeddings',
-     method='*')
+     embeddings='sanfrancisco/embedding/node2vec/sf_node2vec_128',
+     output='sanfrancisco/labeled_emb/node2vec/sf_node2vec_128_time_21_plus',
+     method='+')
