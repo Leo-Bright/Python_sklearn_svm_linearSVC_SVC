@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import float16
-import sys
 
 
 def main(time_samples, embeddings, output, method):
@@ -25,12 +24,14 @@ def main(time_samples, embeddings, output, method):
         for line in time_samples_file:
             if line_count >= total_output_size:
                 break
-            if line_count % 10000 == 0:
+            if line_count % 50000 == 0:
                 print('process rate: ', line_count/total_output_size)
             line = line.strip()
             node_sequence_time = line.split(' ')
             node_sequence = node_sequence_time[:-1]
             travel_time = node_sequence_time[-1]
+            if int(travel_time) < 100 or int(travel_time) > 1000:
+                continue
             nodes_embeddings = []
             for node in node_sequence:
                 if node not in osmid_embeddings:
@@ -54,7 +55,7 @@ def combine_embeddings(embeddings_list, method):
         matrix = np.abs(matrix)
         result = matrix.sum(axis=0)
     elif method == '&':
-        result = matrix.reshape(-1)
+        result = np.append(matrix[0], matrix[-1])
     else:
         col_size = matrix.shape[0]
         result = matrix.sum(axis=0)/col_size
@@ -62,6 +63,6 @@ def combine_embeddings(embeddings_list, method):
 
 
 main(time_samples='sanfrancisco/node/sf_travel_time_21.samples',
-     embeddings='sanfrancisco/embedding/node2vec/sf_node2vec_128',
-     output='sanfrancisco/labeled_emb/node2vec/sf_node2vec_128_time_21_plus',
+     embeddings='sanfrancisco/embedding/my_model/sf_random_wn10_wl1280_win5_iter1_neg5_dim128.embeddings',
+     output='sanfrancisco/labeled_emb/my_model/sf_random_wn10_wl1280_win5_neg5_dim128_time_21_plus.embeddings',
      method='+')

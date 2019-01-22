@@ -28,5 +28,5 @@ def main(timed_embeddings):
 
 
 if __name__ == '__main__':
-    main(timed_embeddings='sanfrancisco/labeled_emb/node2vec/sf_node2vec_128_time_21_plus',
+    main(timed_embeddings='sanfrancisco/labeled_emb/my_model/sf_random_wn10_wl1280_win5_neg5_dim128_time_21_plus.embeddings',
          )
