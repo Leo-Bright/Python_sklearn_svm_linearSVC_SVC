@@ -33,7 +33,7 @@ def main(time_samples, embeddings, output, method):
                 continue
             node_sequence = node_sequence_time[:-1]
             travel_time = node_sequence_time[-1]
-            if int(travel_time) < 10 or int(travel_time) > 1000:
+            if int(travel_time) < 50 or int(travel_time) > 1000:
                 continue
             nodes_embeddings = []
             for node in node_sequence:
