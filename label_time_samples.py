@@ -24,7 +24,7 @@ def main(time_samples, embeddings, output, method):
         for line in time_samples_file:
             # if line_count >= total_output_size:
             #     break
-            if line_count % 50000 == 0:
+            if line_count % 100000 == 0:
                 print('process trajectory: ', line_count)
             line_count += 1
             line = line.strip()
@@ -33,8 +33,8 @@ def main(time_samples, embeddings, output, method):
                 continue
             node_sequence = node_sequence_time[:-1]
             travel_time = node_sequence_time[-1]
-            # if int(travel_time) < 100 or int(travel_time) > 1000:
-            #     continue
+            if int(travel_time) < 100 or int(travel_time) > 800:
+                continue
             nodes_embeddings = []
             for node in node_sequence:
                 if node not in osmid_embeddings:
@@ -65,6 +65,6 @@ def combine_embeddings(embeddings_list, method):
 
 
 main(time_samples='sanfrancisco/node/sf_trajectory_node_travel_time_450.travel',
-     embeddings='sanfrancisco/embedding/line/sf_LINE1_128',
-     output='sanfrancisco/labeled_emb/line/sf_LINE1_128_time_450_avg.embeddings',
+     embeddings='sanfrancisco/embedding/deepwalk/sf.embedding128',
+     output='sanfrancisco/labeled_emb/deepwalk/sf_d128_time_450_avg.embeddings',
      method='-')

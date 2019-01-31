@@ -28,5 +28,5 @@ def main(timed_embeddings):
 
 
 if __name__ == '__main__':
-    main(timed_embeddings='sanfrancisco/labeled_emb/deepwalk/sf_deepwalk_d128_time_450_multi.embeddings',
+    main(timed_embeddings='sanfrancisco/labeled_emb/deepwalk/sf_d128_time_450_avg.embeddings',
          )
