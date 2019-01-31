@@ -58,9 +58,11 @@ def combine_embeddings(embeddings_list, method):
         result = matrix.sum(axis=0)
     elif method == '&':
         result = np.append(matrix[0], matrix[-1])
-    else:
+    elif method == '-':
         col_size = matrix.shape[0]
         result = matrix.sum(axis=0)/col_size
+    else:
+        raise Exception
     return result.tolist()
 
 
