@@ -20,18 +20,21 @@ def main(time_samples, embeddings, output, method):
     print(output.rsplit('/', 1)[1])
     with open(time_samples, 'r') as time_samples_file:
         line_count = 0
-        total_output_size = 1000000
+        # total_output_size = 1000000
         for line in time_samples_file:
-            if line_count >= total_output_size:
-                break
+            # if line_count >= total_output_size:
+            #     break
             if line_count % 50000 == 0:
-                print('process rate: ', line_count/total_output_size)
+                print('process trajectory: ', line_count)
+            line_count += 1
             line = line.strip()
             node_sequence_time = line.split(' ')
+            if len(node_sequence_time) < 5:
+                continue
             node_sequence = node_sequence_time[:-1]
             travel_time = node_sequence_time[-1]
-            if int(travel_time) < 100 or int(travel_time) > 1000:
-                continue
+            # if int(travel_time) < 100 or int(travel_time) > 1000:
+            #     continue
             nodes_embeddings = []
             for node in node_sequence:
                 if node not in osmid_embeddings:
@@ -40,7 +43,6 @@ def main(time_samples, embeddings, output, method):
 
             result = combine_embeddings(nodes_embeddings, method)
             output_file.write('%s\n' % ' '.join(map(str, result + [travel_time])))
-            line_count += 1
 
     output_file.close()
 
@@ -62,7 +64,7 @@ def combine_embeddings(embeddings_list, method):
     return result.tolist()
 
 
-main(time_samples='sanfrancisco/node/sf_travel_time_21.samples',
-     embeddings='sanfrancisco/embedding/my_model/sf_random_wn10_wl1280_win5_iter1_neg5_dim128.embeddings',
-     output='sanfrancisco/labeled_emb/my_model/sf_random_wn10_wl1280_win5_neg5_dim128_time_21_plus.embeddings',
-     method='+')
+main(time_samples='sanfrancisco/node/sf_trajectory_node_travel_time_450.travel',
+     embeddings='sanfrancisco/embedding/line/sf_LINE1_128',
+     output='sanfrancisco/labeled_emb/line/sf_LINE1_128_time_450_avg.embeddings',
+     method='-')
