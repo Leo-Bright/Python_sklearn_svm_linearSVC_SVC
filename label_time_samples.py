@@ -33,7 +33,7 @@ def main(time_samples, embeddings, output, method):
                 continue
             node_sequence = node_sequence_time[:-1]
             travel_time = node_sequence_time[-1]
-            if int(travel_time) < 100 or int(travel_time) > 800:
+            if int(travel_time) < 10 or int(travel_time) > 1000:
                 continue
             nodes_embeddings = []
             for node in node_sequence:
@@ -68,5 +68,5 @@ def combine_embeddings(embeddings_list, method):
 
 main(time_samples='sanfrancisco/node/sf_trajectory_node_travel_time_450.travel',
      embeddings='sanfrancisco/embedding/deepwalk/sf.embedding128',
-     output='sanfrancisco/labeled_emb/deepwalk/sf_d128_time_450_avg.embeddings',
-     method='-')
+     output='sanfrancisco/labeled_emb/deepwalk/sf_deepwalk_time_450_multi.embeddings',
+     method='*')
