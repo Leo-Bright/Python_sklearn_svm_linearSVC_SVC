@@ -3,14 +3,15 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/my_model/tmp/sanfrancisco_shortest_dist_all_distance500_beta0.75_gama0.1_traffic_signals.embedding'
-crossing_tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
-traffic_tag_json_file = 'sanfrancisco/node/nodes_traffic_signals.json'
+input_raw_embedding_file = 'tokyo/embedding/my_model/tmp/tokyo_shortest_dist_tag_type_window_width500_traffic_signal.embedding'
+crossing_tag_json_file = 'tokyo/node/nodes_crossing.json'
+traffic_tag_json_file = 'tokyo/node/nodes_traffic_signals.json'
 
-path_array = input_raw_embedding_file.rsplit('.', 2)
+path_array = input_raw_embedding_file.rsplit('.', 1)
 labeled = path_array[0] + '_labeled.' + path_array[1]
-labeled_array = labeled.split('/', 1)
-labeled = labeled[0] + '/labeled_emb/' + labeled_array[2]
+print(labeled)
+labeled_array = labeled.split('/', 2)
+labeled = labeled_array[0] + '/labeled_emb/' + labeled_array[2]
 
 f_labeled = open(labeled, 'w+')
 f_embeddings = open(input_raw_embedding_file, 'r')
@@ -46,7 +47,7 @@ def label_embeddings(selected_crossing, selected_traffic, embeddings, output, fr
     print("traffic signals count: ", traffic_count)
     print("cormal count: ", normal_count)
 
-label_embeddings(f_nodes_selected_crossing, f_nodes_selected_traffic, f_embeddings, f_labeled, fraction=26)
+label_embeddings(f_nodes_selected_crossing, f_nodes_selected_traffic, f_embeddings, f_labeled, fraction=40)
 
 f_labeled.close()
 f_embeddings.close()
