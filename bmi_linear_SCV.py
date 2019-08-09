@@ -2,7 +2,7 @@ from sklearn import model_selection as cross_validation, svm, metrics
 import matplotlib.pyplot as plt
 import pandas as pd
 
-data_matrix = pd.read_csv("tokyo/labeled_emb/my_model/tokyo_shortest_wn160_d128_ns5_ws5_labeled.embeddings", header=None, sep=' ', index_col=0)
+data_matrix = pd.read_csv("porto/embedding/my_model/pt_random_segment_distance500_type_classid_beta0.8_labeled.embedding", header=None, sep=' ', index_col=0)
 # print(tbl.dtypes)
 rows_size, cols_size = data_matrix.shape
 label = data_matrix[cols_size]
