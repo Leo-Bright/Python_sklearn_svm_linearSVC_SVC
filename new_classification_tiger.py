@@ -3,15 +3,15 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'porto/embedding/my_model/pt_random_segment_distance500_type_classid_beta0.8.embedding'
+input_raw_embedding_file = 'sanfrancisco/embedding/my_model/sf_shortest_segment_distance500_type_classid_beta0.8.embedding'
 tag_json_file = 'sanfrancisco/segment/sf_segments_tiger_nametype.json'
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
-labeled = path_array[0] + '_labeled.' + path_array[1]
 result_array = path_array[0].split('/', 2)
+labeled_path = result_array[0] + '/labeled_emb/' + result_array[2] + '_labeled.' + path_array[1]
 result_path = result_array[0] + '/result/' + result_array[2] + '.result'
 
-f_labeled = open(labeled, 'w+')
+f_labeled = open(labeled_path, 'w+')
 f_embeddings = open(input_raw_embedding_file, 'r')
 f_nodes_selected = open(tag_json_file, 'r')
 
@@ -26,8 +26,7 @@ def label_embeddings(selected, embeddings, output, keyset, fraction=1, ):
         sid, node_vec = sid_vector[0], sid_vector[1:]
         if len(node_vec) < 10:
             continue
-        if sid in data_selected_label:
-            type_value = data_selected_label[sid]
+        type_value = data_selected_label[sid] if sid in data_selected_label else None
         if type_value is not None and type_value in keyset:
             output.write(line + ' ' + type_value + '\n')
             positive_count[type_value] += 1
@@ -52,7 +51,7 @@ f_nodes_selected.close()
 max_score = 0
 max_report = None
 for i in range(10):
-    data_matrix = pd.read_csv(labeled, header=None, sep=' ', index_col=0)
+    data_matrix = pd.read_csv(labeled_path, header=None, sep=' ', index_col=0)
     # print(tbl.dtypes)
     rows_size, cols_size = data_matrix.shape
     label = data_matrix[cols_size]
