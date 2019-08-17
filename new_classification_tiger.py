@@ -26,8 +26,9 @@ def label_embeddings(selected, embeddings, output, keyset, fraction=1, ):
         osmid, node_vec = osmid_vector[0], osmid_vector[1:]
         if len(node_vec) < 10:
             continue
-        label = data_selected_label[osmid]
-        if label in keyset:
+        if osmid in data_selected_label:
+            label = data_selected_label[osmid]
+        if label is not None and label in keyset:
             output.write(line + ' ' + label + '\n')
             positive_count[label] += 1
         else:
