@@ -22,15 +22,15 @@ def label_embeddings(selected, embeddings, output, keyset, fraction=1, ):
     negtive_count = 0
     for line in embeddings.readlines():
         line = line.strip()
-        osmid_vector = line.split(' ')
-        osmid, node_vec = osmid_vector[0], osmid_vector[1:]
+        sid_vector = line.split(' ')
+        sid, node_vec = sid_vector[0], sid_vector[1:]
         if len(node_vec) < 10:
             continue
-        if osmid in data_selected_label:
-            label = data_selected_label[osmid]
-        if label is not None and label in keyset:
-            output.write(line + ' ' + label + '\n')
-            positive_count[label] += 1
+        if sid in data_selected_label:
+            type_value = data_selected_label[sid]
+        if type_value is not None and type_value in keyset:
+            output.write(line + ' ' + type_value + '\n')
+            positive_count[type_value] += 1
         else:
             rd = random.randint(0, 999) + 1
             if rd > fraction:
