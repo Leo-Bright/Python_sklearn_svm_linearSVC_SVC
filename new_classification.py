@@ -3,8 +3,8 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/my_model/tmp/sanfrancisco_shortest_dist_all_distance500_beta0.75_gama0.1_traffic_signals.embedding'
-tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
+input_raw_embedding_file = 'sanfrancisco/embedding/kpca/sanfrancisco_combined_kpca_crossing_128d.embeddings'
+tag_json_file = 'sanfrancisco/node/nodes_traffic_signals.json'
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 labeled = path_array[0] + '_labeled.' + path_array[1]
@@ -15,28 +15,28 @@ f_nodes_selected = open(tag_json_file, 'r')
 
 
 def label_embeddings(selected, embeddings, output, fraction=1):
-    node_crossing = json.loads(selected.readline())
-    crossing_count = 0
+    node_labeled = json.loads(selected.readline())
     normal_count = 0
+    unnormal_count = 0
     for line in embeddings.readlines():
         line = line.strip()
         osmid_vector = line.split(' ')
         osmid, node_vec = osmid_vector[0], osmid_vector[1:]
         if len(node_vec) < 10:
             continue
-        if osmid in node_crossing:
-            output.write(line + ' ' + 'crossing' + '\n')
-            crossing_count += 1
+        if osmid in node_labeled:
+            output.write(line + ' ' + 'normal' + '\n')
+            normal_count += 1
         else:
             rd = random.randint(0, 999) + 1
             if rd > fraction:
                 continue
-            output.write(line + ' ' + 'normal' + '\n')
-            normal_count += 1
-    print("crossing count: ", crossing_count)
-    print("cormal count: ", normal_count)
+            output.write(line + ' ' + 'unnormal' + '\n')
+            unnormal_count += 1
+    print("normal count: ", normal_count)
+    print("unnormal count: ", unnormal_count)
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=26)
+label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=50)
 
 f_labeled.close()
 f_embeddings.close()
