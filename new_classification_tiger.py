@@ -3,12 +3,12 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/my_model/sf_shortest_segment_distance500_type_classid_beta0.8.embedding'
+input_raw_embedding_file = 'sanfrancisco/embedding/raw_feature/sanfrancisco_raw_feature_segment.embeddings'
 tag_json_file = 'sanfrancisco/segment/sf_segments_tiger_nametype.json'
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 result_array = path_array[0].split('/', 2)
-labeled_path = result_array[0] + '/labeled_emb/' + result_array[2] + '_labeled.' + path_array[1]
+labeled_path = path_array[0] + '_labeled.' + path_array[1]
 result_path = result_array[0] + '/result/' + result_array[2] + '.result'
 
 f_labeled = open(labeled_path, 'w+')
