@@ -6,6 +6,7 @@ import pandas as pd
 input_raw_embedding_file = 'sanfrancisco/embedding/pca/sanfrancisco_combined_pca_traffic_8d.embeddings'
 tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
 unnormal_sample_fraction = 26
+validate_time = 10
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 labeled = path_array[0] + '_labeled.' + path_array[1]
@@ -48,7 +49,7 @@ f_nodes_selected.close()
 # ======classification=====
 max_score = 0
 max_report = None
-for i in range(10):
+for i in range(validate_time):
     data_matrix = pd.read_csv(labeled, header=None, sep=' ', index_col=0)
     # print(tbl.dtypes)
     rows_size, cols_size = data_matrix.shape
