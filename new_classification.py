@@ -3,8 +3,9 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/pca/sanfrancisco_pca_and_deepwalk_128d_traffic.embeddings'
+input_raw_embedding_file = 'sanfrancisco/embedding/pca/sanfrancisco_combined_pca_traffic_8d.embeddings'
 tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
+unnormal_sample_fraction = 26
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 labeled = path_array[0] + '_labeled.' + path_array[1]
@@ -36,7 +37,8 @@ def label_embeddings(selected, embeddings, output, fraction=1):
     print("normal count: ", normal_count)
     print("unnormal count: ", unnormal_count)
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=26)
+
+label_embeddings(f_nodes_selected, f_embeddings, f_labeled, fraction=unnormal_sample_fraction)
 
 f_labeled.close()
 f_embeddings.close()
