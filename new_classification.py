@@ -23,7 +23,7 @@ def label_embeddings(selected, embeddings, output, fraction=1):
         line = line.strip()
         osmid_vector = line.split(' ')
         osmid, node_vec = osmid_vector[0], osmid_vector[1:]
-        if len(node_vec) < 10:
+        if len(node_vec) < 3:
             continue
         if osmid in node_labeled:
             output.write(line + ' ' + 'normal' + '\n')
