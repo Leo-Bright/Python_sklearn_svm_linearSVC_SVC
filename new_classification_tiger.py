@@ -3,13 +3,15 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/raw_feature/sanfrancisco_raw_feature_segment.embeddings'
+input_raw_embedding_file = 'sanfrancisco/embedding/raw_feature/segment/sanfrancisco_raw_feature_segment.embeddings'
 tag_json_file = 'sanfrancisco/segment/sf_segments_tiger_nametype.json'
+keyset = ('Ave',)
+negtive_fraction = 180
+validate_repo = 10
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 result_array = path_array[0].split('/', 2)
 labeled_path = path_array[0] + '_labeled.' + path_array[1]
-result_path = result_array[0] + '/result/' + result_array[2] + '.result'
 
 f_labeled = open(labeled_path, 'w+')
 f_embeddings = open(input_raw_embedding_file, 'r')
@@ -24,7 +26,7 @@ def label_embeddings(selected, embeddings, output, keyset, fraction=1, ):
         line = line.strip()
         sid_vector = line.split(' ')
         sid, node_vec = sid_vector[0], sid_vector[1:]
-        if len(node_vec) < 10:
+        if len(node_vec) < 2:
             continue
         type_value = data_selected_label[sid] if sid in data_selected_label else None
         if type_value is not None and type_value in keyset:
@@ -40,7 +42,7 @@ def label_embeddings(selected, embeddings, output, keyset, fraction=1, ):
     print("negtive count: ", negtive_count)
 
 
-label_embeddings(f_nodes_selected, f_embeddings, f_labeled, keyset=('St', 'Ave',) , fraction=300, )
+label_embeddings(f_nodes_selected, f_embeddings, f_labeled, keyset=keyset, fraction=negtive_fraction, )
 
 f_labeled.close()
 f_embeddings.close()
@@ -50,7 +52,7 @@ f_nodes_selected.close()
 # ======classification=====
 max_score = 0
 max_report = None
-for i in range(10):
+for i in range(validate_repo):
     data_matrix = pd.read_csv(labeled_path, header=None, sep=' ', index_col=0)
     # print(tbl.dtypes)
     rows_size, cols_size = data_matrix.shape
@@ -71,7 +73,4 @@ for i in range(10):
 
 print(max_score)
 print(max_report)
-
-with open(result_path, 'w+') as f:
-    f.write(max_report)
 

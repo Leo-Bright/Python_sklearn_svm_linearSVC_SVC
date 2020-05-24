@@ -3,9 +3,9 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/pca/sanfrancisco_combined_pca_traffic_8d.embeddings'
-tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
-unnormal_sample_fraction = 26
+input_raw_embedding_file = 'sanfrancisco/embedding/node2vec/sanfrancisco_raw_feature_and_node2vec_128d_crossing.embeddings'
+tag_json_file = 'sanfrancisco/node/nodes_traffic_signals.json'
+unnormal_sample_fraction = 46
 validate_time = 10
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
