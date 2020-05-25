@@ -3,7 +3,7 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/node2vec/sanfrancisco_raw_feature_and_node2vec_128d_crossing.embeddings'
+input_raw_embedding_file = 'sanfrancisco/embedding/gcn/sf_gcn_raw_feature_none_16d_10epoch.embedding'
 tag_json_file = 'sanfrancisco/node/nodes_traffic_signals.json'
 unnormal_sample_fraction = 46
 validate_time = 10

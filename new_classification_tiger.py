@@ -3,11 +3,11 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/raw_feature/segment/sanfrancisco_raw_feature_segment.embeddings'
+input_raw_embedding_file = 'sanfrancisco/embedding/pca/segment/sanfrancisco_pca4d_and_node2vec_128d_plus_segment.embeddings'
 tag_json_file = 'sanfrancisco/segment/sf_segments_tiger_nametype.json'
-keyset = ('Ave',)
-negtive_fraction = 180
-validate_repo = 10
+keyset = ('St',)
+negtive_fraction = 230
+validate_repo = 3
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 result_array = path_array[0].split('/', 2)
