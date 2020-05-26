@@ -3,10 +3,10 @@ import random
 from sklearn import model_selection as cross_validation, svm, metrics
 import pandas as pd
 
-input_raw_embedding_file = 'sanfrancisco/embedding/gcn/sf_gcn_raw_feature_none_16d_10epoch.embedding'
-tag_json_file = 'sanfrancisco/node/nodes_traffic_signals.json'
-unnormal_sample_fraction = 46
-validate_time = 10
+input_raw_embedding_file = 'sanfrancisco/embedding/gcn/sf_gcn_raw_feature_none_16d_traffic.embedding'
+tag_json_file = 'sanfrancisco/node/nodes_crossing.json'
+unnormal_sample_fraction = 26
+cross_validate = 5
 
 path_array = input_raw_embedding_file.rsplit('.', 1)
 labeled = path_array[0] + '_labeled.' + path_array[1]
@@ -49,7 +49,7 @@ f_nodes_selected.close()
 # ======classification=====
 max_score = 0
 max_report = None
-for i in range(validate_time):
+for i in range(cross_validate):
     data_matrix = pd.read_csv(labeled, header=None, sep=' ', index_col=0)
     # print(tbl.dtypes)
     rows_size, cols_size = data_matrix.shape
